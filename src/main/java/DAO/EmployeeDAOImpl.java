@@ -18,11 +18,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         this.connection = connection;
     }
 
+    // ДОБАВЛЕНИЕ СУЩНОСТИ В БД:
+    @Override
     public void addEmployeeToDatabase(Employee employee) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO employee (first_name, last_name," +
+                    " gender, age, city_id) VALUES ((?), (?), (?), (?), (?))");
+            statement.setString(1, employee.getFirstName());
+            statement.setString(2, employee.getLastName());
+            statement.setString(3, employee.getGender());
+            statement.setInt(4, employee.getAge());
+            statement.setInt(5, employee.getCityId());
+            statement.executeUpdate();
+        } catch (SQLException e) { // ловим ошибки
+            throw new RuntimeException(e);
+        }
     }
 
-
+    // ПОИСК ПО ID:
     @Override
     public Employee findEmployeeById(Integer id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE id = (?)")) {
@@ -36,6 +49,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
     }
 
+    // ВЕСЬ СПИСОК:
     @Override
     public List<Employee> employeeListFromDatabase() {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee")) {
@@ -50,11 +64,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
     }
 
+    //ИЗМЕНЕНИЕ В БД:
     @Override
-    public void updateEmployeeInDatabase(Integer id, Employee employee) throws SQLException {
-        //  Employee employee = findEmployeeById(employeeId);
-       PreparedStatement statement = connection.prepareStatement("UPDATE employee SET first_name = (?), " +
-                "last_name = (?), gender = (?), age = (?), city_id = (?) WHERE id = (?)");
+    public void updateEmployeeInDatabase(Integer id, Employee employee) {
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("UPDATE employee SET first_name = (?), " +
+                    "last_name = (?), gender = (?), age = (?), city_id = (?) WHERE id = (?)");
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getLastName());
             statement.setString(3, employee.getGender());
@@ -62,13 +78,23 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             statement.setInt(5, employee.getCityId());
             statement.setInt(6, id);
             statement.executeUpdate();
-        //    preparedStatement.setInt(6, employee.getId());
-            // return Employee.create(resultSet);
+        } catch (SQLException e) { // ловим ошибки
+            throw new RuntimeException(e);
+        }
 
     }
 
-//
-//    public Employee deleteEmployeeById(Integer id) {
-//
+    // УДАЛЕНИЕ ИЗ БД:
+    @Override
+    public void deleteEmployeeById(Integer id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE  FROM employee WHERE id = (?)");
+            statement.setInt(employeeId, id);
+            statement.executeUpdate();
+            employeeListFromDatabase().stream().forEach(System.out::println);
+        } catch (SQLException e) { // ловим ошибки
+            throw new RuntimeException(e);
+        }
+    }
 }
 

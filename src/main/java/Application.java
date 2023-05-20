@@ -1,4 +1,5 @@
 import DAO.EmployeeDAOImpl;
+import model.Employee;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,10 +25,28 @@ public class Application {
 //    }
         Connection connection = DriverManager.getConnection(url, user, password);
         EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(connection);
-        System.out.println(employeeDAO.findEmployeeById(1));
-        System.out.println("******");
-        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
-        System.out.println("******");
+//        System.out.println("****** ПОИСК ПО ID: ******");
+//        System.out.println(employeeDAO.findEmployeeById(2));
+//
+//        System.out.println("****** ВЕСЬ СПИСОК: ******");
+//        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
+//
+//        System.out.println("****** ДОБАВЛЕНИЕ НОВОЙ СУЩНОСТИ В ДБ: ******");
+        Employee employee = new Employee("Ekaterina", "Razumova", "female", 41, 1); // создаём сущность
+//        employeeDAO.addEmployeeToDatabase(employee); // добавляем
+//        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println); // смотрим весь список
+
+        System.out.println("******** ИЗМЕНЕНИЕ СУЩНОСТИ В БД: *****");
+
+      //  employee.setLastName("Mohova");
+        Employee employee2 = employeeDAO.findEmployeeById(5);
+        employee2.setCityId(2);
+        employeeDAO.updateEmployeeInDatabase(5, employee2);
+        System.out.println(employeeDAO.findEmployeeById(5));
+
+//        System.out.println("******** УДАЛЕНИЕ СУЩНОСТИ ИЗ БД: *****");
+//        employeeDAO.deleteEmployeeById(10);
+
 
 
     }
