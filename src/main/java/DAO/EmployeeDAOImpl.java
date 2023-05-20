@@ -1,5 +1,6 @@
 package DAO;
 
+import model.City;
 import model.Employee;
 
 import java.sql.Connection;
@@ -49,14 +50,61 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
     }
 
+
     // ВЕСЬ СПИСОК:
     @Override
     public List<Employee> employeeListFromDatabase() {
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee")) {
             ResultSet resultSet = preparedStatement.executeQuery(); // запрос к БД с помощью метода executeQuery(), который возвращает ResultSet
             List<Employee> employeeList = new ArrayList<>(); //создаём лист
+            while (resultSet.next()) {
+                //if (!resultSet.wasNull()) {// пока следующая строка не пуста
+                    employeeList.add(Employee.create(resultSet)); //добавляем в лист объект из запроса
+              //  } else employeeList.add(Employee.createWithCity(resultSet));
+            }
+            return employeeList; // возвращаем список
+        } catch (SQLException e) { // ловим ошибки
+            throw new RuntimeException(e);
+        }
+    }
+
+    // ВЕСЬ СПИСОК с JOIN без парсинга:
+    @Override
+    public List<Employee> employeeListFromDatabaseWithJoin() {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee INNER JOIN city ON city.city_id=employee.city_id")) {
+            ResultSet resultSet = preparedStatement.executeQuery(); // запрос к БД с помощью метода executeQuery(), который возвращает ResultSet
+            List<Employee> employeeList = new ArrayList<>(); //создаём лист
             while (resultSet.next()) { // пока следующая строка не пуста
-                employeeList.add(Employee.create(resultSet)); //добавляем в лист объект из запроса
+                employeeList.add(Employee.createWithCity(resultSet)); //добавляем в лист объект из запроса
+            }
+            return employeeList; // возвращаем список
+        } catch (SQLException e) { // ловим ошибки
+            throw new RuntimeException(e);
+        }
+    }
+
+    // ВЕСЬ СПИСОК C парсингом:
+    @Override
+    public List<Employee> employeeListFromDatabaseWithJoinAndPars() {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee FULL OUTER JOIN city ON city.city_id=employee.city_id")) {
+            ResultSet resultSet = preparedStatement.executeQuery(); // запрос к БД с помощью метода executeQuery(), который возвращает ResultSet
+            List<Employee> employeeList = new ArrayList<>(); //создаём лист
+            while (resultSet.next()) { // пока следующая строка в запросе не пуста
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String gender = resultSet.getString("gender");
+                int age = resultSet.getInt("age");
+                int cityId = resultSet.getInt("city_id");
+                String cityName = resultSet.getString("city_name");
+                //  City city = null;
+                if (!resultSet.wasNull()) {
+                    City city = new City(cityId, cityName);
+                    employeeList.add(new Employee(id, firstName, lastName, gender, age, city));
+                } else {
+                    City city = new City(null, null);
+                employeeList.add(new Employee(id, firstName, lastName, gender, age, city));
+                }
             }
             return employeeList; // возвращаем список
         } catch (SQLException e) { // ловим ошибки
@@ -81,7 +129,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         } catch (SQLException e) { // ловим ошибки
             throw new RuntimeException(e);
         }
-
     }
 
     // УДАЛЕНИЕ ИЗ БД:

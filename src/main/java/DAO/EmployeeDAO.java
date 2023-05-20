@@ -14,6 +14,12 @@ public interface EmployeeDAO {
 
     List<Employee> employeeListFromDatabase();
 
+    // ВЕСЬ СПИСОК с JOIN:
+    List<Employee> employeeListFromDatabaseWithJoin();
+
+    // ВЕСЬ СПИСОК C парсингом:
+    List<Employee> employeeListFromDatabaseWithJoinAndPars();
+
     void updateEmployeeInDatabase(Integer id, Employee employee) ;
 
     // УДАЛЕНИЕ ИЗ БД:

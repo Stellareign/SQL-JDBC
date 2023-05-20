@@ -28,24 +28,34 @@ public class Application {
 //        System.out.println("****** ПОИСК ПО ID: ******");
 //        System.out.println(employeeDAO.findEmployeeById(2));
 //
-//        System.out.println("****** ВЕСЬ СПИСОК: ******");
-//        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
+        System.out.println("****** ВЕСЬ СПИСОК без JOIN и парсинга: ******");
+        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
+
+        System.out.println("****** ВЕСЬ СПИСОК с применением JOIN ******");
+
+        employeeDAO.employeeListFromDatabaseWithJoin().stream().forEach(System.out::println);
+
+        System.out.println("***** c JOIN b парсом весь список****");
+        employeeDAO.employeeListFromDatabaseWithJoinAndPars().stream().forEach(System.out::println);
 //
 //        System.out.println("****** ДОБАВЛЕНИЕ НОВОЙ СУЩНОСТИ В ДБ: ******");
-        Employee employee = new Employee("Ekaterina", "Razumova", "female", 41, 1); // создаём сущность
+//        Employee employee = new Employee("Ekaterina", "Razumova", "female", 41, 1); // создаём сущность
 //        employeeDAO.addEmployeeToDatabase(employee); // добавляем
 //        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println); // смотрим весь список
 
         System.out.println("******** ИЗМЕНЕНИЕ СУЩНОСТИ В БД: *****");
 
       //  employee.setLastName("Mohova");
-        Employee employee2 = employeeDAO.findEmployeeById(5);
-        employee2.setCityId(2);
-        employeeDAO.updateEmployeeInDatabase(5, employee2);
-        System.out.println(employeeDAO.findEmployeeById(5));
+//        Employee employee2 = employeeDAO.findEmployeeById(1);
+//        employee2.setFirstName("Anastasiia");
+//        employee2.setLastName("Rudneva");
+//        employeeDAO.updateEmployeeInDatabase(1, employee2);
+//        System.out.println(employeeDAO.findEmployeeById(1));
 
 //        System.out.println("******** УДАЛЕНИЕ СУЩНОСТИ ИЗ БД: *****");
 //        employeeDAO.deleteEmployeeById(10);
+
+
 
 
 
