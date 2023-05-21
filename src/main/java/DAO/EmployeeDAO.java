@@ -2,26 +2,25 @@ package DAO;
 
 import model.Employee;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface EmployeeDAO {
+
     // ДОБАВЛЕНИЕ СУЩНОСТИ В БД:
     void addEmployeeToDatabase(Employee employee);
 
-    Employee findEmployeeById(Integer id);
+    Employee findEmployeeById(int id);
 
 
     List<Employee> employeeListFromDatabase();
 
-    // ВЕСЬ СПИСОК с JOIN:
-    List<Employee> employeeListFromDatabaseWithJoin();
 
-    // ВЕСЬ СПИСОК C парсингом:
-   // List<Employee> employeeListFromDatabaseWithJoinAndPars();
 
-    void updateEmployeeInDatabase(Integer id, Employee employee) ;
+    //ОБНОВЛЕНИЕ СУЩНОСТИ:
+    void updateEmployeeInDatabase(Employee employee);
 
     // УДАЛЕНИЕ ИЗ БД:
-    void deleteEmployeeById(Integer id);
+    void deleteEmployee(Employee employee);
+
+    void deleteEmployeeById(int id);
 }

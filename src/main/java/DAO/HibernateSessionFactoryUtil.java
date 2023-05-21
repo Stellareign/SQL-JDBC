@@ -1,3 +1,5 @@
+package DAO;
+
 import model.Employee;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

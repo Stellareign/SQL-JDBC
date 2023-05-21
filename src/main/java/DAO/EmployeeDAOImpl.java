@@ -1,146 +1,92 @@
 package DAO;
 
-import model.City;
 import model.Employee;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-    private final Connection connection;
+  //  private final Connection connection;
 
     int employeeId = 1; // переменная для запросов
 
-    public EmployeeDAOImpl(Connection connection) {
-        this.connection = connection;
-    }
-
     // ДОБАВЛЕНИЕ СУЩНОСТИ В БД:
     @Override
+
     public void addEmployeeToDatabase(Employee employee) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO employee (first_name, last_name," +
-                    " gender, age, city_id) VALUES ((?), (?), (?), (?), (?))");
-            statement.setString(1, employee.getFirstName());
-            statement.setString(2, employee.getLastName());
-            statement.setString(3, employee.getGender());
-            statement.setInt(4, employee.getAge());
-            statement.setInt(5, employee.getCityId());
-            statement.executeUpdate();
-        } catch (SQLException e) { // ловим ошибки
-            throw new RuntimeException(e);
+        // В ресурсах блока try создаем объект сессии с помощью нашего конфиг-файла
+        // И открываем сессию
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();) {
+            // Создаем транзакцию и начинаем ее
+            Transaction transaction = session.beginTransaction();
+            // вызываем на объекте сессии метод save
+            // данный метод внутри себя содержит необходимый запрос к базе
+            // для создания новой строки
+            session.save(employee);
+            // Выполняем коммит, то есть сохраняем изменения,
+            // которые совершили в рамках транзакции
+            transaction.commit();
         }
     }
 
     // ПОИСК ПО ID:
     @Override
-    public Employee findEmployeeById(Integer id) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE id = (?)")) {
-            preparedStatement.setInt(employeeId, id); // задали значение запроса (id)
-            preparedStatement.setMaxRows(1); // максимальное количество строк в результате заспроса (1)
-            ResultSet resultSet = preparedStatement.executeQuery(); // запрос к БД с помощью метода executeQuery(), который возвращает ResultSet
-            resultSet.next(); // перемещаем указатель на первую строку результата
-            return Employee.create(resultSet); // создаём объект по результату запроса (из метода в классе Employee)
-        } catch (SQLException e) { // ловим ошибки
-            throw new RuntimeException(e);
-        }
+    public Employee findEmployeeById(int id) {
+                                                // С помощью конфиг-файла получаем сессию, открываем ее
+                                                // и через метод get получаем объект
+                                                // В параметре метода get нужно указать объект какого класса нам нужен
+                                                // и его id
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
     }
 
 
     // ВЕСЬ СПИСОК:
     @Override
     public List<Employee> employeeListFromDatabase() {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee")) {
-            ResultSet resultSet = preparedStatement.executeQuery(); // запрос к БД с помощью метода executeQuery(), который возвращает ResultSet
-            List<Employee> employeeList = new ArrayList<>(); //создаём лист
-            while (resultSet.next()) {
-                //if (!resultSet.wasNull()) {// пока следующая строка не пуста
-                    employeeList.add(Employee.create(resultSet)); //добавляем в лист объект из запроса
-              //  } else employeeList.add(Employee.createWithCity(resultSet));
-            }
-            return employeeList; // возвращаем список
-        } catch (SQLException e) { // ловим ошибки
-            throw new RuntimeException(e);
-        }
+        List<Employee> employeeList = (List<Employee>)
+                HibernateSessionFactoryUtil     // обращение к фабрике
+                        .getSessionFactory()    // получение фабрики сессий и соотв.класса
+                        .openSession()          //открывается новая сессия openSession()
+                        .createQuery("From Employee") // запрос на получение всех объектов Employee
+                        .list();
+                                        // сохраняем всё в лист
+        return employeeList;                    // и возвращаем список
     }
 
-    // ВЕСЬ СПИСОК с JOIN без парсинга:
-    @Override
-    public List<Employee> employeeListFromDatabaseWithJoin() {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee INNER JOIN city ON city.city_id=employee.city_id")) {
-            ResultSet resultSet = preparedStatement.executeQuery(); // запрос к БД с помощью метода executeQuery(), который возвращает ResultSet
-            List<Employee> employeeList = new ArrayList<>(); //создаём лист
-            while (resultSet.next()) { // пока следующая строка не пуста
-                employeeList.add(Employee.createWithCity(resultSet)); //добавляем в лист объект из запроса
-            }
-            return employeeList; // возвращаем список
-        } catch (SQLException e) { // ловим ошибки
-            throw new RuntimeException(e);
-        }
-    }
-
-//    // ВЕСЬ СПИСОК C парсингом:
-//    @Override
-//    public List<Employee> employeeListFromDatabaseWithJoinAndPars() {
-//        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee FULL OUTER JOIN city ON city.city_id=employee.city_id")) {
-//            ResultSet resultSet = preparedStatement.executeQuery(); // запрос к БД с помощью метода executeQuery(), который возвращает ResultSet
-//            List<Employee> employeeList = new ArrayList<>(); //создаём лист
-//            while (resultSet.next()) { // пока следующая строка в запросе не пуста
-//                int id = resultSet.getInt("id");
-//                String firstName = resultSet.getString("first_name");
-//                String lastName = resultSet.getString("last_name");
-//                String gender = resultSet.getString("gender");
-//                int age = resultSet.getInt("age");
-//                int cityId = resultSet.getInt("city_id");
-//                String cityName = resultSet.getString("city_name");
-//                //  City city = null;
-//                if (!resultSet.wasNull()) {
-//                    City city = new City(cityId, cityName);
-//                    employeeList.add(new Employee(id, firstName, lastName, gender, age, city));
-//                } else {
-//                    City city = new City(null, null);
-//                employeeList.add(new Employee(id, firstName, lastName, gender, age, city));
-//                }
-//            }
-//            return employeeList; // возвращаем список
-//        } catch (SQLException e) { // ловим ошибки
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     //ИЗМЕНЕНИЕ В БД:
     @Override
-    public void updateEmployeeInDatabase(Integer id, Employee employee) {
-        try {
-
-            PreparedStatement statement = connection.prepareStatement("UPDATE employee SET first_name = (?), " +
-                    "last_name = (?), gender = (?), age = (?), city_id = (?) WHERE id = (?)");
-            statement.setString(1, employee.getFirstName());
-            statement.setString(2, employee.getLastName());
-            statement.setString(3, employee.getGender());
-            statement.setInt(4, employee.getAge());
-            statement.setInt(5, employee.getCityId());
-            statement.setInt(6, id);
-            statement.executeUpdate();
-        } catch (SQLException e) { // ловим ошибки
-            throw new RuntimeException(e);
+    public void updateEmployeeInDatabase(Employee employee) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+            Transaction transaction = session.beginTransaction();
+                                                // Для обновления данных нужно передать в конструктор
+                                                // объект с актуальными данными
+            session.update(employee);
+            transaction.commit();
         }
     }
 
-    // УДАЛЕНИЕ ИЗ БД:
+    // УДАЛЕНИЕ ИЗ БД по ID:
     @Override
-    public void deleteEmployeeById(Integer id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("DELETE  FROM employee WHERE id = (?)");
-            statement.setInt(employeeId, id);
-            statement.executeUpdate();
-            employeeListFromDatabase().stream().forEach(System.out::println);
-        } catch (SQLException e) { // ловим ошибки
-            throw new RuntimeException(e);
+    public void deleteEmployee(Employee employee) {
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+                                                      // Для удаления объекта из таблицы нужно передать его в метод delete
+            session.delete(employee);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void deleteEmployeeById(int id) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Employee employee = session.get(Employee.class, id); // Получаем объект Employee по id
+            Transaction transaction = session.beginTransaction();
+            session.delete(employee); // Удаляем объект из базы данных
+            transaction.commit();
+        } catch (Exception e) {
+            // Обрабатываем возможные исключения
         }
     }
 }

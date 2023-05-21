@@ -1,62 +1,32 @@
 import DAO.EmployeeDAOImpl;
 import model.Employee;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Application {
     public static void main(String[] args) throws SQLException {
-        final String user = "postgres";
-        final String password = "1234";
-        final String url = "jdbc:postgresql://localhost:5432/skypro";
+        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
 
-//       try (Connection connection = DriverManager.getConnection(url, user, password);
-//           Statement statement = connection.createStatement() // для запросов к БД
-//
-//                   ) {
-//           ResultSet resultSet = statement.executeQuery("SELECT * FROM employee WHERE id = (1)");
-//           while (resultSet.next()) {
-//               System.out.println(resultSet);
-//           }
-//       }catch (SQLException e){
-//           throw new RuntimeException(e);
-//       }
-//    }
-        Connection connection = DriverManager.getConnection(url, user, password);
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl(connection);
-//        System.out.println("****** ПОИСК ПО ID: ******");
-//        System.out.println(employeeDAO.findEmployeeById(2));
-//
-        System.out.println("****** ВЕСЬ СПИСОК без JOIN и парсинга: ******");
-        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
+        // ДОБАВЛЕНИЕ В БД:
+        Employee employee1 = new Employee("Maxim", "Andreev", "male", 23, 1);
+        //  employeeDAO.addEmployeeToDatabase(employee1);
 
-        System.out.println("****** ВЕСЬ СПИСОК с применением JOIN ******");
+        // УДАЛЕНИЕ из БД:
+        Employee employee2 = new Employee(12, "Maxim", "Andreev", "male", 23, 1);
+//        employeeDAO.deleteEmployee(employee2);
 
-        employeeDAO.employeeListFromDatabaseWithJoin().stream().forEach(System.out::println);
+        // УДАЛЕНИЕ ПО ID:
+     //   employeeDAO.deleteEmployeeById(14);
 
-        System.out.println("***** c JOIN и парсом весь список****");
+        // ВЕСЬ СПИСОК
+        // employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
 
-//
-//        System.out.println("****** ДОБАВЛЕНИЕ НОВОЙ СУЩНОСТИ В ДБ: ******");
-//        Employee employee = new Employee("Ekaterina", "Razumova", "female", 41, 1); // создаём сущность
-//        employeeDAO.addEmployeeToDatabase(employee); // добавляем
-//        employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println); // смотрим весь список
+        // ПОЛУЧЕНИЕ ПО id:
+    //    System.out.println(employeeDAO.findEmployeeById(1));
 
-        System.out.println("******** ИЗМЕНЕНИЕ СУЩНОСТИ В БД: *****");
-
-      //  employee.setLastName("Mohova");
-//        Employee employee2 = employeeDAO.findEmployeeById(1);
-//        employee2.setFirstName("Anastasiia");
-//        employee2.setLastName("Rudneva");
-//        employeeDAO.updateEmployeeInDatabase(1, employee2);
-//        System.out.println(employeeDAO.findEmployeeById(1));
-
-//        System.out.println("******** УДАЛЕНИЕ СУЩНОСТИ ИЗ БД: *****");
-//        employeeDAO.deleteEmployeeById(10);
-
-
-
+        // ОБНОВЛЕНИЕ:
+        Employee employee3 = new Employee(7, "Marina", "Tihomolova", "female", 43, 1);
+       employeeDAO.updateEmployeeInDatabase(employee3);
 
 
     }
