@@ -35,8 +35,8 @@ public class Application {
 
         employeeDAO.employeeListFromDatabaseWithJoin().stream().forEach(System.out::println);
 
-        System.out.println("***** c JOIN b парсом весь список****");
-        employeeDAO.employeeListFromDatabaseWithJoinAndPars().stream().forEach(System.out::println);
+        System.out.println("***** c JOIN и парсом весь список****");
+
 //
 //        System.out.println("****** ДОБАВЛЕНИЕ НОВОЙ СУЩНОСТИ В ДБ: ******");
 //        Employee employee = new Employee("Ekaterina", "Razumova", "female", 41, 1); // создаём сущность

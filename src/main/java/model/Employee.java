@@ -3,21 +3,33 @@ package model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Data
 @NoArgsConstructor
+@Entity
+@Table(name = "employee")
 public class Employee {
-
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private Integer id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "age")
     private Integer age;
+    @Column(name = "city_id")
     private Integer cityId;
+    @Column(name = "city_name")
     private String cityName;
-    private City city;
+
+
 
     //  private Integer cityId = city.getCityId();
 
@@ -40,15 +52,6 @@ public class Employee {
         this.cityName = cityName;
     }
 
-    // конструктор с ГОРОДОМ
-    public Employee(Integer id, String firstName, String lastName, String gender, Integer age, City city) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.age = age;
-        this.city = city;
-    }
 
     public static Employee create(ResultSet resultSet) throws SQLException { // метод для создания объекта по результату запроса
         Employee employee = new Employee();
@@ -76,27 +79,19 @@ public class Employee {
 
     @Override
     public String toString() { // изменила тустринг, чтобы оставить варианты конструктора и обеспечить корректный вывод без null, там где это не нужно
-        if (city != null) {
-            return "Employee{" +
-                    "id=" + id +
-                    ", firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", gender='" + gender + '\'' +
-                    ", age=" + age +
-                    ", city=" + city + '\'' +
-                    '}';
-        } else if (cityName != null) {
+
+         if (cityName != null) {
             return
-            "Employee{" +
-                    "id=" + id +
-                    ", firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", gender='" + gender + '\'' +
-                    ", age=" + age +
-                    ", cityId=" + cityId +
-                    ", cityName='" + cityName + '\'' +
-                    '}';
-        } else return  "Employee{" +
+                    "Employee{" +
+                            "id=" + id +
+                            ", firstName='" + firstName + '\'' +
+                            ", lastName='" + lastName + '\'' +
+                            ", gender='" + gender + '\'' +
+                            ", age=" + age +
+                            ", cityId=" + cityId +
+                            ", cityName='" + cityName + '\'' +
+                            '}';
+        } else return "Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
