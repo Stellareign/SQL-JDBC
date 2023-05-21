@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-  //  private final Connection connection;
+    //  private final Connection connection;
 
     int employeeId = 1; // переменная для запросов
 
@@ -33,10 +33,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     // ПОИСК ПО ID:
     @Override
     public Employee findEmployeeById(int id) {
-                                                // С помощью конфиг-файла получаем сессию, открываем ее
-                                                // и через метод get получаем объект
-                                                // В параметре метода get нужно указать объект какого класса нам нужен
-                                                // и его id
+        // С помощью конфиг-файла получаем сессию, открываем ее
+        // и через метод get получаем объект
+        // В параметре метода get нужно указать объект какого класса нам нужен
+        // и его id
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
     }
 
@@ -49,8 +49,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                         .getSessionFactory()    // получение фабрики сессий и соотв.класса
                         .openSession()          //открывается новая сессия openSession()
                         .createQuery("From Employee") // запрос на получение всех объектов Employee
-                        .list();
-                                        // сохраняем всё в лист
+                        .list();                // сохраняем всё в лист
         return employeeList;                    // и возвращаем список
     }
 
@@ -58,35 +57,36 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     //ИЗМЕНЕНИЕ В БД:
     @Override
     public void updateEmployeeInDatabase(Employee employee) {
-        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
                                                 // Для обновления данных нужно передать в конструктор
-                                                // объект с актуальными данными
+                                                 // объект с актуальными данными (включая id)
             session.update(employee);
+            transaction.commit();
+        }
+    }
+
+    // УДАЛЕНИЕ ИЗ БД:
+    @Override
+    public void deleteEmployee(Employee employee) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            // Для удаления объекта из таблицы нужно передать его в метод delete (включая id)
+            session.delete(employee);
             transaction.commit();
         }
     }
 
     // УДАЛЕНИЕ ИЗ БД по ID:
     @Override
-    public void deleteEmployee(Employee employee) {
-        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-                                                      // Для удаления объекта из таблицы нужно передать его в метод delete
-            session.delete(employee);
-            transaction.commit();
-        }
-    }
-
-    @Override
     public void deleteEmployeeById(int id) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Employee employee = session.get(Employee.class, id); // Получаем объект Employee по id
             Transaction transaction = session.beginTransaction();
-            session.delete(employee); // Удаляем объект из базы данных
+            session.delete(employee); // Удаляем полученный по id объект из базы данных
             transaction.commit();
-        } catch (Exception e) {
-            // Обрабатываем возможные исключения
+        } catch (Exception e) { // Обрабатываем возможные исключения
+
         }
     }
 }
