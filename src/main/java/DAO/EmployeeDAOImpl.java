@@ -27,7 +27,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             // Выполняем коммит, то есть сохраняем изменения,
             // которые совершили в рамках транзакции
             transaction.commit();
-        }
+        }// автоматическое закрытие сессии в блоке трай
     }
 
     // ПОИСК ПО ID:
@@ -38,9 +38,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         // В параметре метода get нужно указать объект какого класса нам нужен
         // и его id
         try (Session session = // try-with-resources для автоматического закрытия сессии -> передаём объект в скобки
-                        HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+                     HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             return session.get(Employee.class, id);
-        }
+        }// автоматическое закрытие сессии в блоке трай
     }
 
 
@@ -48,10 +48,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public List<Employee> employeeListFromDatabase() {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) { // try-with-resources
-         //   List<Employee> employeeList = (List<Employee>)
+            //   List<Employee> employeeList = (List<Employee>)
             return session.createQuery("From Employee") // запрос на получение всех объектов Employee
                     .list(); // и возвращаем список
-        }
+        }// автоматическое закрытие сессии в блоке трай
     }
 
 
@@ -64,7 +64,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             // объект с актуальными данными (включая id)
             session.update(employee);
             transaction.commit();
-        }
+        }// автоматическое закрытие сессии в блоке трай
     }
 
     // УДАЛЕНИЕ ИЗ БД:
@@ -75,7 +75,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             // Для удаления объекта из таблицы нужно передать его в метод delete (включая id)
             session.delete(employee);
             transaction.commit();
-        }
+        }// автоматическое закрытие сессии в блоке трай
     }
 
     // УДАЛЕНИЕ ИЗ БД по ID:
@@ -86,9 +86,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             Transaction transaction = session.beginTransaction();
             session.delete(employee); // Удаляем полученный по id объект из базы данных
             transaction.commit();
-        } catch (Exception e) { // Обрабатываем возможные исключения
+        } // автоматическое закрытие сессии в блоке трай
+    }
 
-        }
+    // тест-метод (от наставника):
+    public void test() {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Employee employee = session.get(Employee.class, 1);// вызов метода get() у объекта Session для поиска сотрудника с id=1.
+            employee.setLastName("UPS"); //  изменение фамилии найденного сотрудника.
+            session.get(Employee.class, 2); // вызов метода get() у объекта Session для поиска сотрудника с id=2 (но результат не используется).
+            session.update(employee); // вызов метода update() у объекта Session для обновления данных о сотруднике с измененной фамилией
+        } // автоматическое закрытие сессии в блоке трай
     }
 }
 

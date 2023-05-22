@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14030056-e991-4f7f-a7c5-c597a7c45c64" name="Changes" comment="Hibernate">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="14030056-e991-4f7f-a7c5-c597a7c45c64" name="Changes" comment="Hibernate-исправл.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/EmployeeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/EmployeeDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/HibernateSessionFactoryUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/HibernateSessionFactoryUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Employee.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +87,7 @@
       <workItem from="1684573730133" duration="5727000" />
       <workItem from="1684584308597" duration="13719000" />
       <workItem from="1684669266549" duration="7374000" />
-      <workItem from="1684766225897" duration="1991000" />
+      <workItem from="1684766225897" duration="2825000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1684263011205</created>
@@ -135,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684671350246</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Hibernate-исправл.">
+      <created>1684768311545</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1684768311545</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,6 +151,7 @@
     <MESSAGE value="all" />
     <MESSAGE value="+ JOIN" />
     <MESSAGE value="Hibernate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Hibernate" />
+    <MESSAGE value="Hibernate-исправл." />
+    <option name="LAST_COMMIT_MESSAGE" value="Hibernate-исправл." />
   </component>
 </project>
