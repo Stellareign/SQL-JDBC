@@ -19,14 +19,14 @@ public class Application {
      //   employeeDAO.deleteEmployeeById(14);
 
         // ВЕСЬ СПИСОК
-        // employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
+         employeeDAO.employeeListFromDatabase().stream().forEach(System.out::println);
 
         // ПОЛУЧЕНИЕ ПО id:
     //    System.out.println(employeeDAO.findEmployeeById(1));
 
         // ОБНОВЛЕНИЕ:
         Employee employee3 = new Employee(7, "Marina", "Tihomolova", "female", 43, 1);
-       employeeDAO.updateEmployeeInDatabase(employee3);
+     //  employeeDAO.updateEmployeeInDatabase(employee3);
 
 
     }

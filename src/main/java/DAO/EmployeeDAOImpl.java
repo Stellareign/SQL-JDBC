@@ -37,20 +37,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         // и через метод get получаем объект
         // В параметре метода get нужно указать объект какого класса нам нужен
         // и его id
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
+        try (Session session = // try-with-resources для автоматического закрытия сессии -> передаём объект в скобки
+                        HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.get(Employee.class, id);
+        }
     }
 
 
     // ВЕСЬ СПИСОК:
     @Override
     public List<Employee> employeeListFromDatabase() {
-        List<Employee> employeeList = (List<Employee>)
-                HibernateSessionFactoryUtil     // обращение к фабрике
-                        .getSessionFactory()    // получение фабрики сессий и соотв.класса
-                        .openSession()          //открывается новая сессия openSession()
-                        .createQuery("From Employee") // запрос на получение всех объектов Employee
-                        .list();                // сохраняем всё в лист
-        return employeeList;                    // и возвращаем список
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) { // try-with-resources
+         //   List<Employee> employeeList = (List<Employee>)
+            return session.createQuery("From Employee") // запрос на получение всех объектов Employee
+                    .list(); // и возвращаем список
+        }
     }
 
 
@@ -59,8 +60,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public void updateEmployeeInDatabase(Employee employee) {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-                                                // Для обновления данных нужно передать в конструктор
-                                                 // объект с актуальными данными (включая id)
+            // Для обновления данных нужно передать в конструктор
+            // объект с актуальными данными (включая id)
             session.update(employee);
             transaction.commit();
         }

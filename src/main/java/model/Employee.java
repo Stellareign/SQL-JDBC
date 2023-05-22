@@ -16,7 +16,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id; // примитив не может принимать значение NULL
-    @Column(name = "first_name")
+    @Column(name = "first_name") // аннотацию можно не ставить, если имя колонки таблицы БД и поля класса совпадают
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
