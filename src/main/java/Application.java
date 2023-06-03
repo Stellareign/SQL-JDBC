@@ -37,13 +37,16 @@ public class Application {
       //   cityDAO.addNewCity(city);
 
         // ОБНОВЛЕНИЕ ГОРОДА:
-          cityDAO.updateCityInDatabaseByID(5, new City("Kostroma"));
+     //     cityDAO.updateCityInDatabaseByID(5, new City("Kostroma"));
 
         // УДАЛЕНИЕ ГОРОДА:
         //   cityDAO.deleteCityById(5);
 
         // СПИСОК ГОРОДОВ:
             cityDAO.allCityList().stream().forEach(System.out::println);
+
+            // CСПИСОК СОТРУДНИКОВ В ГОРОДЕ:
+        cityDAO.getAllEmployeesByCityId(1).stream().forEach(System.out::println);
 
 
     }

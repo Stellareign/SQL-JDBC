@@ -3,8 +3,10 @@ package DAO.impl;
 import DAO.api.CityDAO;
 import Factory.HibernateSessionFactoryUtil;
 import model.City;
+import model.Employee;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -65,6 +67,15 @@ public class CityDAOImpl implements CityDAO {
             session.delete(city);
             transaction.commit();
         } // автоматическое закрытие сессии в блоке трай
+    }
+
+    // СПИСОК СОТРУДНИКОВ В ГОРОДЕ:
+    public List<Employee> getAllEmployeesByCityId(int cityId) {
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Query<Employee> query = session.createQuery("FROM Employee WHERE city.id = :city_id", Employee.class);
+            query.setParameter("city_id", cityId);
+            return query.getResultList();
+        }
     }
 
 }
