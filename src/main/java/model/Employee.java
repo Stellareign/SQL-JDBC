@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -28,7 +29,8 @@ public class Employee {
     private Integer cityId; // Integer может принять значение NULL!
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", insertable = false, updatable = false)
+           // insertable = false, updatable = false - избавляемся от ошибки
     private City city;
 
     public Employee(int id, String firstName, String lastName, String gender, int age, Integer cityId) {
@@ -49,6 +51,13 @@ public class Employee {
         this.cityId = cityId;
     }
 
+    public Employee(String firstName, String lastName, String gender, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+    }
+
     public static Employee create(ResultSet resultSet) throws SQLException { // метод для создания объекта по результату запроса
         Employee employee = new Employee();
         employee.setId(resultSet.getInt("id")); // извлекаем значения полей
@@ -60,4 +69,16 @@ public class Employee {
         return employee; // возвращаем созданный объект
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getId() == employee.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

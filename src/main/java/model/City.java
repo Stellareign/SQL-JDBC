@@ -1,14 +1,17 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-@Data
+//@Data
+@Getter // вместо @Data лучше использовать @Getter и @Setter в JPA
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity // персистенс
@@ -21,10 +24,14 @@ public class City {
     @Column(name = "city_name")
     private String cityName;
 //
-//    @OneToMany(mappedBy = "city_id", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Employee> employeesInCity = new ArrayList<>();
-  //  private Set<Employee> employees;
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Employee> employeesInCity = new ArrayList<>();
+   // private Set<Employee> employees;
 
+
+    public City(String cityName) {
+        this.cityName = cityName;
+    }
 
     @Override
     public String toString() {
