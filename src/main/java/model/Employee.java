@@ -9,11 +9,11 @@ import java.sql.SQLException;
 
 @Data
 @NoArgsConstructor
-@Entity
+@Entity // персистенс
 @Table(name = "employee")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //  автоматическая генерация ключа
     @Column(name = "id")
     private int id; // примитив не может принимать значение NULL
     @Column(name = "first_name") // аннотацию можно не ставить, если имя колонки таблицы БД и поля класса совпадают
@@ -27,7 +27,12 @@ public class Employee {
     @Column(name = "city_id")
     private Integer cityId; // Integer может принять значение NULL!
 
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
     public Employee(int id, String firstName, String lastName, String gender, int age, Integer cityId) {
+
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

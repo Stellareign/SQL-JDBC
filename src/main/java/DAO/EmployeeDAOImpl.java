@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-    //  private final Connection connection;
 
     int employeeId = 1; // переменная для запросов
 
@@ -38,7 +37,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         // В параметре метода get нужно указать объект какого класса нам нужен
         // и его id
         try (Session session = // try-with-resources для автоматического закрытия сессии -> передаём объект в скобки
-                     HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+                     HibernateSessionFactoryUtil.getSessionFactory().openSession()) { // транзакция для данной операции не обязательна (не нужна)
             return session.get(Employee.class, id);
         }// автоматическое закрытие сессии в блоке трай
     }
@@ -49,7 +48,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> employeeListFromDatabase() {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) { // try-with-resources
             //   List<Employee> employeeList = (List<Employee>)
-            return session.createQuery("From Employee") // запрос на получение всех объектов Employee
+            return session.createQuery("From Employee") // запрос на получение всех объектов Employee (можно сделать любой "усложнённый" запрос)
                     .list(); // и возвращаем список
         }// автоматическое закрытие сессии в блоке трай
     }
@@ -95,7 +94,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             Employee employee = session.get(Employee.class, 1);// вызов метода get() у объекта Session для поиска сотрудника с id=1.
             employee.setLastName("UPS"); //  изменение фамилии найденного сотрудника.
             session.get(Employee.class, 2); // вызов метода get() у объекта Session для поиска сотрудника с id=2 (но результат не используется).
-            session.update(employee); // вызов метода update() у объекта Session для обновления данных о сотруднике с измененной фамилией
+            session.update(employee); // вызов метода update() у объекта Session для обновления данных о сотруднике с изменённой фамилией
         } // автоматическое закрытие сессии в блоке трай
     }
 }
