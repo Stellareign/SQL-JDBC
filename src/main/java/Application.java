@@ -15,7 +15,7 @@ public class Application {
         employeeDAO.addEmployeeToDatabase(employee1);
 
         // УДАЛЕНИЕ из БД:
-        Employee employee2 = new Employee(12, "Maxim", "Andreev", "male", 23, 1);
+      //  Employee employee2 = new Employee(12, "Maxim", "Andreev", "male", 23, 1);
 //        employeeDAO.deleteEmployee(employee2);
 
         // УДАЛЕНИЕ ПО ID:
@@ -28,7 +28,7 @@ public class Application {
         //    System.out.println(employeeDAO.findEmployeeById(1));
 
         // ОБНОВЛЕНИЕ:
-        Employee employee3 = new Employee(7, "Marina", "Tihomolova", "female", 43, 1);
+     //   Employee employee3 = new Employee(7, "Marina", "Tihomolova", "female", 43, 1); // нерабочий после удаления поля ID
         //  employeeDAO.updateEmployeeInDatabase(employee3);
 
         // ******************************* ГОРОДА**************************** //
