@@ -11,7 +11,7 @@ public class Application {
         CityDAOImpl cityDAO = new CityDAOImpl();
 
         // ДОБАВЛЕНИЕ В БД:
-        Employee employee1 = new Employee("Elena", "Gordeeva", "female", 27 );
+        Employee employee1 = new Employee("Elena", "Gordeeva", "female", 27);
         employeeDAO.addEmployeeToDatabase(employee1);
 
         // УДАЛЕНИЕ из БД:
@@ -34,20 +34,19 @@ public class Application {
         // ******************************* ГОРОДА**************************** //
         // ДДОБАЛЕНИЕ ГОРОДА:
         City city = new City("Irkutsk");
-      //   cityDAO.addNewCity(city);
+        //   cityDAO.addNewCity(city);
 
         // ОБНОВЛЕНИЕ ГОРОДА:
-     //     cityDAO.updateCityInDatabaseByID(5, new City("Kostroma"));
+        //     cityDAO.updateCityInDatabaseByID(5, new City("Kostroma"));
 
         // УДАЛЕНИЕ ГОРОДА:
         //   cityDAO.deleteCityById(5);
 
         // СПИСОК ГОРОДОВ:
-            cityDAO.allCityList().stream().forEach(System.out::println);
+        cityDAO.allCityList().stream().forEach(System.out::println);
 
-            // CСПИСОК СОТРУДНИКОВ В ГОРОДЕ:
-        cityDAO.getAllEmployeesByCityId(1).stream().forEach(System.out::println);
-
+        // CСПИСОК СОТРУДНИКОВ В ГОРОДЕ:
+        cityDAO.getAllEmployeesByCityId(2).stream().forEach(System.out::println);
 
     }
 }

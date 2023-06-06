@@ -25,31 +25,31 @@ public class Employee {
     private String gender;
     @Column(name = "age")
     private int age;
-    @Column(name = "city_id")
-    private Integer cityId; // Integer может принять значение NULL!
+//    @Column(name = "city_id")
+//    private Integer cityId; // Integer может принять значение NULL!
 
     @ManyToOne
     @JoinColumn(name = "city_id", insertable = false, updatable = false)
            // insertable = false, updatable = false - избавляемся от ошибки
     private City city;
 
-    public Employee(int id, String firstName, String lastName, String gender, int age, Integer cityId) {
+//    public Employee(int id, String firstName, String lastName, String gender, int age, Integer cityId) {
+//
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.gender = gender;
+//        this.age = age;
+//        this.cityId = cityId;
+//    }
 
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.age = age;
-        this.cityId = cityId;
-    }
-
-    public Employee(String firstName, String lastName, String gender, int age, Integer cityId) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.age = age;
-        this.cityId = cityId;
-    }
+//    public Employee(String firstName, String lastName, String gender, int age, Integer cityId) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.gender = gender;
+//        this.age = age;
+//        this.cityId = cityId;
+//    }
 
     public Employee(String firstName, String lastName, String gender, int age) {
         this.firstName = firstName;
@@ -58,16 +58,16 @@ public class Employee {
         this.age = age;
     }
 
-    public static Employee create(ResultSet resultSet) throws SQLException { // метод для создания объекта по результату запроса
-        Employee employee = new Employee();
-        employee.setId(resultSet.getInt("id")); // извлекаем значения полей
-        employee.setFirstName(resultSet.getString("first_name"));
-        employee.setLastName(resultSet.getString("last_name"));
-        employee.setGender(resultSet.getString("gender"));
-        employee.setAge(resultSet.getInt("age"));
-        employee.setCityId(resultSet.getInt("city_Id"));
-        return employee; // возвращаем созданный объект
-    }
+//    public static Employee create(ResultSet resultSet) throws SQLException { // метод для создания объекта по результату запроса
+//        Employee employee = new Employee();
+//        employee.setId(resultSet.getInt("id")); // извлекаем значения полей
+//        employee.setFirstName(resultSet.getString("first_name"));
+//        employee.setLastName(resultSet.getString("last_name"));
+//        employee.setGender(resultSet.getString("gender"));
+//        employee.setAge(resultSet.getInt("age"));
+//        employee.setCityId(resultSet.getInt("city_Id"));
+//        return employee; // возвращаем созданный объект
+//    }
 
     @Override
     public boolean equals(Object o) {

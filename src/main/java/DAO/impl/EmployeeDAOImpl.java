@@ -50,7 +50,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> employeeListFromDatabase() {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) { // try-with-resources
             //   List<Employee> employeeList = (List<Employee>)
-            return session.createQuery("From Employee") // запрос на получение всех объектов Employee (можно сделать любой "усложнённый" запрос)
+            return session.createQuery("FROM Employee") // запрос на получение всех объектов Employee (можно сделать любой "усложнённый" запрос)
                     .list(); // и возвращаем список
         }// автоматическое закрытие сессии в блоке трай
     }

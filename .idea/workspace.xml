@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="14030056-e991-4f7f-a7c5-c597a7c45c64" name="Changes" comment="Связи таблиц">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/impl/CityDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/impl/CityDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +94,7 @@
       <workItem from="1685170921293" duration="2237000" />
       <workItem from="1685470739104" duration="2489000" />
       <workItem from="1685558093453" duration="1729000" />
-      <workItem from="1685776203622" duration="7999000" />
+      <workItem from="1685776203622" duration="8988000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1684263011205</created>
@@ -166,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685785998627</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Связи таблиц">
+      <created>1685786619690</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1685786619690</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
