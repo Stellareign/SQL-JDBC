@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14030056-e991-4f7f-a7c5-c597a7c45c64" name="Changes" comment="Связи таблиц">
-      <change afterPath="$PROJECT_DIR$/src/main/java/persistence/PersistenceConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+    <list default="true" id="14030056-e991-4f7f-a7c5-c597a7c45c64" name="Changes" comment="Persistence">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/PersistenceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Factory/PersistenceUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +76,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Application" />
+        <item itemvalue="Application.Application" />
+        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>
@@ -102,6 +105,7 @@
       <workItem from="1686078062000" duration="600000" />
       <workItem from="1686594272403" duration="132000" />
       <workItem from="1686766680842" duration="1428000" />
+      <workItem from="1686935640924" duration="3479000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1684263011205</created>
@@ -210,5 +214,16 @@
     <MESSAGE value="Hibernate-исправл." />
     <MESSAGE value="Связи таблиц" />
     <option name="LAST_COMMIT_MESSAGE" value="Связи таблиц" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Application.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
